@@ -4,40 +4,6 @@ import java.util.Scanner;
 
 public class Main {
 	
-	private static void generateZ(int[] z, String concatenatedText) {
-		int l = 0, r = 0, k = 0;		// initializing local variables...
-
-		for (int i = 1; i < concatenatedText.length(); i++) {
-			if (i > r) {		// nothing matches... z[i] needs to be calculated...
-				l = r = i;
-
-				while (r < concatenatedText.length() && concatenatedText.charAt(r - l) == concatenatedText.charAt(r)) {		// initially (r - l) = 0...
-					r++;
-				}
-
-				z[i] = r - l;
-				r--;
-			}
-			else {
-				k = i - l;		// 'k' corresponds to number which matches in [l, r] interval...
-
-				if (z[k] < r - i + 1) {		// z[i] will be equal to z[k] if z[k] is less than remaining interval...
-					z[i] = z[k];
-				}
-				else {		// starts from 'r' and checks manually...
-					l = i;
-
-					while (r < concatenatedText.length() && concatenatedText.charAt(r - l) == concatenatedText.charAt(r)) {
-						r++;
-					}
-
-					z[i] = r - l;
-					r--;
-				}
-			}
-		}
-	}
-	
 	public static void main(String[] args) {
 		int[] z;
 		
@@ -74,6 +40,40 @@ public class Main {
 		output = output.substring(0, output.lastIndexOf(", ")) + " }";		// polishing output by removing the last comma and adding closing curly brace...
 		
 		System.out.println(output);		// printing the output...
+	}
+	
+	private static void generateZ(int[] z, String concatenatedText) {
+		int l = 0, r = 0, k = 0;		// initializing local variables...
+
+		for (int i = 1; i < concatenatedText.length(); i++) {
+			if (i > r) {		// nothing matches... z[i] needs to be calculated...
+				l = r = i;
+
+				while (r < concatenatedText.length() && concatenatedText.charAt(r - l) == concatenatedText.charAt(r)) {		// initially (r - l) = 0...
+					r++;
+				}
+
+				z[i] = r - l;
+				r--;
+			}
+			else {
+				k = i - l;		// 'k' corresponds to number which matches in [l, r] interval...
+
+				if (z[k] < r - i + 1) {		// z[i] will be equal to z[k] if z[k] is less than remaining interval...
+					z[i] = z[k];
+				}
+				else {		// starts from 'r' and checks manually...
+					l = i;
+
+					while (r < concatenatedText.length() && concatenatedText.charAt(r - l) == concatenatedText.charAt(r)) {
+						r++;
+					}
+
+					z[i] = r - l;
+					r--;
+				}
+			}
+		}
 	}
 	
 }
